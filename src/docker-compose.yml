@@ -4,18 +4,18 @@ services:
   nginx:
     build: ./services/nginx
 
-  mariaDB:
-    build: ./services/mariaDB
-    volumes:
-      - mariaDB_data:/var/lib/mariaDB
-    restart: always
-    env_file:
-      - .env
+  # mariaDB:
+  #   build: ./services/mariaDB
+  #   volumes:
+  #     - mariaDB_data:/var/lib/mariaDB
+  #   restart: always
+  #   env_file:
+  #     - .env
 
-  wordpress:
-    depends_on:
-      - mariaDB
-    build: ./services/wordpress
-    ports:
-      - "443:443"
-    restart: always
+  # wordpress:
+  #   depends_on:
+  #     - mariaDB
+  #   build: ./services/wordpress
+  #   ports:
+  #     - "443:443"
+  #   restart: always

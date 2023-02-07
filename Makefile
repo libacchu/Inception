@@ -10,3 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
+CONTAINERS = (docker container ls -a -q)
+IMAGES = (docker image ls -q)
+
+fclean:
+	docker container rm -f $$(docker container ls -aq)
+	docker image rm $$(docker image ls -qa)
