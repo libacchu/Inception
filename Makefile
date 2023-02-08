@@ -13,6 +13,10 @@
 CONTAINERS = (docker container ls -a -q)
 IMAGES = (docker image ls -q)
 
-fclean:
+conclean:
 	docker container rm -f $$(docker container ls -aq)
+imgclean:
 	docker image rm $$(docker image ls -qa)
+
+fclean:
+	docker system prune -a
