@@ -3,6 +3,7 @@ FROM debian:buster
 RUN apt-get update && apt-get install -y \
 	php7.4 \
 	php-fpm \
+	php-mysqli \
 	wget \
 
 EXPOSE 9000
