@@ -17,10 +17,10 @@ RUN openssl req \
 		-out /etc/ssl/libacchu.42.fr.crt \
 		-subj "/C=DE/ST=Lower Saxony/L=Hildesheim/O=42 Wolfsburg/OU=students/CN=libacchu.42.fr"
 
-COPY ./conf/nginx.conf /etc/nginx/conf.d
+COPY ./conf/nginx.conf /etc/nginx/conf.d/default.conf
 # COPY ./conf/nginx.conf /etc/nginx/sites-enabled/default2
 
-EXPOSE 443
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
  

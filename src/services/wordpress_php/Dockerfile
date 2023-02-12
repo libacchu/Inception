@@ -5,10 +5,11 @@ RUN apt-get update && apt-get install -y \
 	php-fpm \
 	php-mysqli \
 	wget \
+	curl
 
 EXPOSE 9000
 
-COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d
+COPY ./tools/conf/www.conf /etc/php/7.4/fpm/pool.d
 
 RUN mkdir /run/php
 
