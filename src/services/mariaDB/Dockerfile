@@ -3,9 +3,9 @@ FROM debian:buster
 RUN apt update
 RUN apt install -y mariadb-server mariadb-client
 
+COPY ./tools/crate_mariadb.sh /var/local/bin/
+COPY ./conf/mysql.sql /var/local/bin/
+
 EXPOSE 3306
 
-ENTRYPOINT [ "executable" ]
-
-CMD [ "executable" ]
-
+RUN chown -R 

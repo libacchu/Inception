@@ -5,7 +5,9 @@ RUN apt-get update && apt-get install -y \
 	php-fpm \
 	php-mysqli \
 	wget \
-	curl
+	curl \
+	ca-certificates gnupg lsb-release \
+	certbot python3-certbot-apache -y
 
 EXPOSE 9000
 
