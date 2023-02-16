@@ -13,7 +13,7 @@ services:
       - network_inception
 
   wordpress:
-    build: ./services/wordpress
+    build: ./services/wordpress_php
     # image: wordpress:latest
     # depends_on:
     #   - mariadb
