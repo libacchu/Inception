@@ -28,13 +28,12 @@ services:
       WORDPRESS_MARIADB_HOST: mariadb:3306
     networks:
       - network_inception
-
   mariadb:
-    # build: ./services/mariaDB
-    image: mariadb:latest
-    restart: always
-    volumes:
-      - mariadb_data:/var/lib/mysql
+    build: ./services/mariaDB
+    # image: mariadb:latest
+    # restart: always
+    # volumes:
+    #   - mariadb_data:/var/lib/mysql
     ports:
       - "3306:3306"
     environment:
@@ -42,25 +41,20 @@ services:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: libacchu
       MYSQL_PASSWORD: life_1S_good
+# volumes:
+#   wp_data:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       device: /home/libacchu/data/wordpress
+#       o: bind
+#   mariadb_data:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       device: /home/libacchu/data/mysql
+#       o: bind
 
-  # php:
-  #   image: php:7.4-fpm
-  #   volumes:
-  #     - wp_data:/var/www/html
-volumes:
-  wp_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/libacchu/data/wordpress
-      o: bind
-  mariadb_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/libacchu/data/mysql
-      o: bind
-
-networks:
-  network_inception:
-    driver: bridge
+# networks:
+#   network_inception:
+#     driver: bridge
