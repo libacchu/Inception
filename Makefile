@@ -13,10 +13,24 @@
 CONTAINERS = (docker container ls -a -q)
 IMAGES = (docker image ls -q)
 
+all: up
+
+domain:
+	echo "127.0.0.1 libacchu.42.fr" >> /etc/hosts
+
+up:	
+	docker compose -f ./src/docker-compose.yml up -d
+
+down:
+	docker compose -f ./src/docker-compose.yml down
+
 conclean:
 	docker container rm -f $$(docker container ls -aq)
+
 imgclean:
 	docker image rm $$(docker image ls -qa)
 
-fclean:
+fclean: down
 	docker system prune -a
+
+.PHONY: all domain up down fclean
