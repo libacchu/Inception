@@ -7,19 +7,17 @@ services:
       - "443:443"
     restart: always
     volumes:
-      - ./nginx/conf/nginx.conf:/etc/nginx/conf.d/default.conf
+      # - ./nginx/conf/nginx.conf:/etc/nginx/conf.d/default.conf
       - wp_data:/var/www/html
     networks:
       - network_inception
-
   wordpress:
     build: ./services/wordpress_php
-    # image: wordpress:latest
     # depends_on:
     #   - mariadb
     restart: always
-    # ports:
-    #   - "9000:443"
+    ports:
+      - "9000:9000"
     volumes:
       - wp_data:/var/www/html
     environment:
@@ -30,31 +28,28 @@ services:
       - network_inception
   mariadb:
     build: ./services/mariaDB
-    # image: mariadb:latest
-    # restart: always
-    # volumes:
-    #   - mariadb_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
+    restart: always
+    # ports:
+    #   - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: born2broot_42
       MYSQL_DATABASE: wordpress
       MYSQL_USER: libacchu
       MYSQL_PASSWORD: life_1S_good
-# volumes:
-#   wp_data:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       device: /home/libacchu/data/wordpress
-#       o: bind
-#   mariadb_data:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       device: /home/libacchu/data/mysql
-#       o: bind
+volumes:
+  wp_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USER}/data/wordpress
+      o: bind
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USER}/data/mysql
+      o: bind
 
-# networks:
-#   network_inception:
-#     driver: bridge
+networks:
+  network_inception:
+    driver: bridge

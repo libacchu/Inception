@@ -1,12 +1,13 @@
 #!/bin/sh
 
-if [ ! -f ./wp-config.php]
+if [ ! -f ./wp-config.php ]
 then 
 	echo "WordPress: Downloading..."
 	wget http://wordpress.org/latest.tar.gz
 	tar xfz latest.tar.gz
 	rm -rf latest.tar.gz
 
+	cd ./wordpress
 	echo "WordPress: Configuring..."
 	sed -i "s/username_here/$MYSQL_USER/g" wp-config-sample.php
 	sed -i "s/password_here/$MYSQL_PASSWORD/g" wp-config-sample.php
@@ -20,4 +21,4 @@ else
 	echo "WordPress: Is already downloaded and setup"
 fi
 
-exec ./wp-config.php
+exec $@

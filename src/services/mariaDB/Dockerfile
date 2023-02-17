@@ -6,10 +6,11 @@ RUN apt install -y mariadb-server mariadb-client
 COPY ./tools /var/www/html
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d
 
-RUN service mysql start && mysql < /var/www/mysql.sql
+COPY ./tools/create_mariadb.sh /var/local/bin/create_mariadb.sh
+COPY ./tools/mysql.sql /var/local/bin/mysql.sql
 
-COPY ./tools/crate_mariadb.sh /var/local/bin/
-COPY ./conf/mysql.sql /var/local/bin/
+RUN chown -R mysql:mysql /var/lib/mysql/
+RUN service mysql start && mysql < /var/local/bin/mysql.sql
 
 EXPOSE 3306
 CMD [ "/usr/bin/mysqld_safe" ]

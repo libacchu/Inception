@@ -19,6 +19,9 @@ domain:
 	echo "127.0.0.1 libacchu.42.fr" >> /etc/hosts
 
 up:	
+	# mkdir /home/libacchu/data
+	# mkdir /home/libacchu/data/wordpress
+	# mkdir /home/libacchu/data/mariadb
 	docker compose -f ./src/docker-compose.yml up -d
 
 down:
