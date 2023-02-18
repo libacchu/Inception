@@ -13,7 +13,12 @@
 CONTAINERS = (docker container ls -a -q)
 IMAGES = (docker image ls -q)
 
-all: up
+all: volumes up
+
+volumes:
+	@mkdir -p $(HOME)/data
+	@mkdir -p $(HOME)/data/wordpress
+	@mkdir -p $(HOME)/data/db
 
 domain:
 	echo "127.0.0.1 libacchu.42.fr" >> /etc/hosts
@@ -30,7 +35,12 @@ conclean:
 imgclean:
 	docker image rm $$(docker image ls -qa)
 
-fclean: down
-	docker system prune -a
+prune:
+	docker system prune -af
+	rm -rf $(HOME)/data
 
-.PHONY: all domain up down fclean
+fclean: down prune
+
+re: fclean all
+
+.PHONY: all domain up down fclean prune volumes re
