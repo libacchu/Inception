@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
 
 EXPOSE 9000
 
-COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d
+COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
 
 RUN mkdir /run/php
 
@@ -26,6 +26,6 @@ WORKDIR /var/www/html
 COPY ./tools/create_wordpress.sh .
 
 
-ENTRYPOINT [ "bash", "create_wordpress.sh" ]
+ENTRYPOINT [ "/bin/sh", "create_wordpress.sh" ]
 
 CMD [ "/usr/sbin/php-fpm7.3", "-F" ]

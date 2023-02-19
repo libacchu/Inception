@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ ! -f ./wp-config.php ]
+if [ ! -f ./wordpress/wp-config.php ]
 then 
 	echo "WordPress: Downloading..."
 	wget http://wordpress.org/latest.tar.gz
