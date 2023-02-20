@@ -23,10 +23,7 @@ volumes:
 domain:
 	echo "127.0.0.1 libacchu.42.fr" >> /etc/hosts
 
-up:	
-	# mkdir /home/libacchu/data
-	# mkdir /home/libacchu/data/wordpress
-	# mkdir /home/libacchu/data/mariadb
+up:	volumes
 	docker compose -f ./src/docker-compose.yml up -d
 
 down:
@@ -45,5 +42,8 @@ prune:
 fclean: down prune
 
 re: fclean all
+
+ps:
+	docker ps
 
 .PHONY: all domain up down fclean prune volumes re

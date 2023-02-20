@@ -8,7 +8,7 @@ services:
     restart: always
     volumes:
       # - ./nginx/conf/nginx.conf:/etc/nginx/conf.d/default.conf
-      - wp_data:/var/www/html
+      - wp_data:/var/www/html/wordpress/
     networks:
       - network_inception
     depends_on:
@@ -21,7 +21,7 @@ services:
     # ports:
     #   - "9000:9000"
     volumes:
-      - wp_data:/var/www/html
+      - wp_data:/var/www/html/wordpress
     env_file:
       - ./.env
     networks:

@@ -6,7 +6,7 @@ mysql_install_db
 
 if [ ! -d "/var/lib/mysql/$MYSQL_DATABASE" ]
 then
-	chown -R mysql:root /var/run/mysqld
+	chown -R mysql:mysql /var/run/mysqld
 
 	sed -i "s/WORDPRESS_DB_USER/$WORDPRESS_DB_USER/g" /usr/bin/setup.sql
 	sed -i "s/WORDPRESS_DB_PASSWORD/$WORDPRESS_DB_PASSWORD/g" /usr/bin/setup.sql
@@ -18,4 +18,3 @@ fi
 
 /etc/init.d/mysql stop
 
-exec "$@"
