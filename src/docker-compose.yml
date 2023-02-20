@@ -11,31 +11,30 @@ services:
       - wp_data:/var/www/html
     networks:
       - network_inception
+    depends_on:
+      - wordpress
   wordpress:
     build: ./services/wordpress_php
-    # depends_on:
-    #   - mariadb
+    depends_on:
+      - mariadb
     restart: always
-    ports:
-      - "9000:9000"
+    # ports:
+    #   - "9000:9000"
     volumes:
       - wp_data:/var/www/html
-    environment:
-      WORDPRESS_MARIADB_USER=: libacchu
-      WORDPRESS_MARIADB_PASSWORD: life_1S_good
-      WORDPRESS_MARIADB_HOST: mariadb:3306
+    env_file:
+      - ./.env
     networks:
       - network_inception
   mariadb:
     build: ./services/mariaDB
     restart: always
+    volumes:
+      - mariadb_data:/var/lib/db
     # ports:
-    #   - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: born2broot_42
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: libacchu
-      MYSQL_PASSWORD: life_1S_good
+    #   - "3307:3306"
+    env_file:
+      - ./.env
 volumes:
   wp_data:
     driver: local
@@ -47,9 +46,8 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/${USER}/data/mysql
+      device: /home/${USER}/data/db
       o: bind
-
 networks:
   network_inception:
     driver: bridge
