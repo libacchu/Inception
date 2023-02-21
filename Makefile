@@ -35,6 +35,9 @@ conclean:
 imgclean:
 	docker image rm $$(docker image ls -qa)
 
+ps:
+	docker ps
+
 prune:
 	docker system prune -af
 	rm -rf $(HOME)/data
@@ -43,4 +46,4 @@ fclean: down prune
 
 re: fclean all
 
-.PHONY: all domain up down fclean prune volumes re
+.PHONY: all domain up down fclean prune volumes re ps

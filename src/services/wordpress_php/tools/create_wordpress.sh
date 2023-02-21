@@ -15,6 +15,17 @@ then
 
 	mv ./wordpress/wp-config-sample.php ./wordpress/wp-config.php
 
+	wp core install --allow-root --url=${WORDPRESS_DOMAIN} \
+				--title=${WORDPRESS_TITLE} \
+				--admin_user=${WORDPRESS_ADMIN_LOGIN} \
+				--admin_password=${WORDPRESS_ADMIN_PASSWORD} \
+				--admin_email=${WORDPRESS_ADMIN_EMAIL};
+
+	wp user create --allow-root ${WORDPRESS_USER_LOGIN} \
+			${WORDPRESS_USER_EMAIL} \
+			--role=contributor \
+			--user_pass=${WORDPRESS_USER_PASSWORD};
+
 	echo "WordPress: Setup completed"
 else
 	echo "WordPress: Is already downloaded and setup"
