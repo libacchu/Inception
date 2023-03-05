@@ -2,8 +2,14 @@ FROM debian:buster
 
 RUN apt-get update && apt-get install -y \
 	php \
+	php-cgi \
 	php-fpm \
 	php-mysqli \
+	php-curl \
+	php-gd \
+	php-mbstring \
+	php-xml \
+	php-zip \
 	wget \
 	curl \
 	bash
