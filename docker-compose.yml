@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  wordpress_php:
+    image: wordpress:latest
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - wp_data:/var/www/html
+    ports: 
+      - "8000:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_PASSWORD: wp_db_pass
+      WORDPRESS_DB_USER: libacchu
+  db:
+    image: mariadb:latest
+    restart: always
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: root_pass
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: libacchu
+      MARIADB_PASSWORD: wp_db_pass
+volumes:
+  wp_data:
+  db_data:
