@@ -1,39 +1,36 @@
 version: '3'
 
 services:
-  nginx:
-    depends_on:
-      - wordpress_php
-    build: ./services/nginx
-    ports: 
-      - "443:443"
-    restart: always
-    volumes:
-      - wp_data:/var/www/html
-      - ./services/nginx/conf/:/etc/nginx/conf.d/
-    networks:
-      - network_inception
-  wordpress_php:
-    depends_on:
-      - mariadb
-    build: ./services/wordpress_php
-    restart: always
-    volumes:
-      - wp_data:/var/www/html
-      - mariadb_data:/var/lib/mysql
-    networks:
-      - network_inception
-    env_file:
-      - .env
+  # nginx:
+  #   depends_on:
+  #     - wordpress_php
+  #   build: ./services/nginx
+  #   ports: 
+  #     - "443:443"
+  #   restart: always
+  #   volumes:
+  #     - wp_data:/var/www/html
+  #     - ./services/nginx/conf/:/etc/nginx/conf.d/
+  #   networks:
+  #     - network_inception
+  # wordpress_php:
+  #   depends_on:
+  #     - mariadb
+  #   build: ./services/wordpress_php
+  #   restart: always
+  #   volumes:
+  #     - wp_data:/var/www/html
+  #     - mariadb_data:/var/lib/mysql
+  #   networks:
+  #     - network_inception
+  #   env_file:
+  #     - .env
   mariadb:
     build: ./services/mariaDB
     restart: always
-    volumes:
-      - mariadb_data:/var/lib/mysql
     networks:
       - network_inception
-    env_file:
-      - .env
+    env_file: .env
 volumes:
   wp_data:
     driver: local
