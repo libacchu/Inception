@@ -1,35 +1,33 @@
 version: '3'
 
 services:
-  # nginx:
-  #   depends_on:
-  #     - wordpress_php
-  #   build: ./services/nginx
-  #   ports: 
-  #     - "443:443"
-  #   restart: always
-  #   volumes:
-  #     - wp_data:/var/www/html
-  #     - ./services/nginx/conf/:/etc/nginx/conf.d/
-  #   networks:
-  #     - network_inception
-  # wordpress_php:
-  #   # depends_on:
-  #   #   - mariadb
-  #   build: ./services/wordpress_php
-  #   restart: always
-  #   volumes:
-  #     - wp_data:/var/www/html
-  #   #   - mariadb_data:/var/lib/mysql
-  #   networks:
-  #     - network_inception
-  #   env_file:
-  #     - .env
-  #   ports: 
-  #     - "8000:80"
-  mariadb:
-    build: ./services/mariaDB
+  nginx:
+    depends_on:
+      - wordpress_php
+    build: ./services/nginx
+    ports: 
+      - "8000:8000"
     restart: always
+    volumes:
+      - wp_data:/var/www/html/wordpress
+      - ./services/nginx/conf/:/etc/nginx/conf.d/
+    networks:
+      - network_inception
+  wordpress_php:
+    depends_on:
+      - mariadb
+    build: ./services/wordpress_php
+    restart: always
+    volumes:
+      - wp_data:/var/www/html/wordpress
+    networks:
+      - network_inception
+    env_file: .env
+  mariadb:
+    build: ./services/mariadb
+    restart: always
+    volumes:
+      - mariadb_data:/var/lib/mysql
     networks:
       - network_inception
     env_file: .env
@@ -38,13 +36,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/${USER}/data/wordpress
+      device: /home/libacchu/data/wordpress
       o: bind
   mariadb_data:
     driver: local
     driver_opts:
       type: none
-      device: /home/${USER}/data/db
+      device: /home/libacchu/data/db
       o: bind
 networks:
   network_inception:

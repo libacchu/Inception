@@ -22,13 +22,14 @@ COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/
 
 RUN mkdir /run/php
 
-COPY ./tools/create_wordpress.sh /var/www/html/create_wordpress.sh
+COPY ./tools/create_wordpress.sh /usr/local/bin/create_wordpress.sh
 
-RUN chmod -R 0777 /var/www/html/create_wordpress.sh
+RUN chmod -R 0777 /usr/local/bin/create_wordpress.sh
+
+
+ENTRYPOINT [ "/usr/local/bin/create_wordpress.sh" ]
 
 WORKDIR /var/www/html/
-
-RUN sh /var/www/html/create_wordpress.sh
 
 EXPOSE 9000
 

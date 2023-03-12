@@ -40,7 +40,7 @@ ps:
 
 prune:
 	docker system prune -af
-	rm -rf $(HOME)/data
+	sudo rm -rf $(HOME)/data
 
 fclean: down prune
 
