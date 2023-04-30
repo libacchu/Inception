@@ -6,11 +6,12 @@ services:
       - wordpress_php
     build: ./services/nginx
     ports: 
-      - "8000:8000"
+      - "443:443"
     restart: always
     volumes:
-      - wp_data:/var/www/html/wordpress
+      - wp_data:/var/www/html/
       - ./services/nginx/conf/:/etc/nginx/conf.d/
+      - ./services/nginx/tools/:/etc/ssl/
     networks:
       - network_inception
   wordpress_php:
@@ -19,7 +20,7 @@ services:
     build: ./services/wordpress_php
     restart: always
     volumes:
-      - wp_data:/var/www/html/wordpress
+      - wp_data:/var/www/html/
     networks:
       - network_inception
     env_file: .env
