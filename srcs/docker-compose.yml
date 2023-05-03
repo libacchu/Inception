@@ -6,8 +6,8 @@ services:
       context: .
       dockerfile: requirements/nginx/Dockerfile
     container_name: nginx
-    # depends_on:
-    #   - wordpress
+    depends_on:
+      - wordpress
     ports:
       - "443:443"
     networks:
@@ -31,28 +31,47 @@ services:
     networks:
       - inception
     restart: always
+    volumes:
+      - db-volume:/var/lib/mysql
     env_file:
       - .env
 
-  # wordpress:
-  #   build:
-  #     context: .
-  #     dockerfile: requirements/wordpress/Dockerfile
-  #     args:
-  #       DB_NAME: ${DB_NAME}
-  #       DB_USER: ${DB_USER}
-  #       DB_PASS: ${DB_PASS}
-  #       DB_ROOT: ${DB_ROOT}
-  #       DB_EMAIL: ${DB_EMAIL}
-  #       DOMAIN_NAME: ${DOMAIN_NAME}
-  #   container_name: wordpress
-  #   depends_on:
-  #     - mariadb
-  #   restart: always
-  #   networks:
-  #     - inception
-  #   volumes:
-  #     - wp-volume:/var/www/
+  wordpress:
+    build:
+      context: .
+      dockerfile: requirements/wordpress/Dockerfile
+      args:
+        DB_NAME: ${DB_NAME}
+        DB_USER: ${DB_USER}
+        DB_PASS: ${DB_PASS}
+        DB_ROOT: ${DB_ROOT}
+        DB_EMAIL: ${DB_EMAIL}
+        DOMAIN_NAME: ${DOMAIN_NAME}
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    restart: always
+    networks:
+      - inception
+    volumes:
+      - wp-volume:/var/www/
+    env_file: .env
+
+volumes:
+  wp-volume:
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/data/wordpress
+  db-volume:
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/data/mariadb
+
+networks:
+    inception:
+        driver: bridge
   # redis:
   #   build:
   #     context: .
@@ -103,20 +122,3 @@ services:
   #   ports:
   #     - "80:80"
   #   restart: always
-
-volumes:
-  wp-volume:
-    driver_opts:
-      o: bind
-      type: none
-      device: /home/${USER}/data/wordpress
-
-  db-volume:
-    driver_opts:
-      o: bind
-      type: none
-      device: /home/${USER}/data/mariadb
-
-networks:
-    inception:
-        driver: bridge

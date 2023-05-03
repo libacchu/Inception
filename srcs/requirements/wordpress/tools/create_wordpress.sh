@@ -7,7 +7,9 @@ then
 	# tar xfz latest.tar.gz
 	# rm -rf latest.tar.gz
 
-	# wp core download --allow-root;
+	/usr/bin/php8 /usr/local/bin/wp core download --allow-root
+
+	/usr/bin/php8 /usr/local/bin/wp core download --allow-root;
 	# cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
 
 	echo "WordPress: Configuring..."
@@ -41,10 +43,10 @@ require_once ABSPATH . 'wp-settings.php';
 EOF
     
 	echo "wp core install..."
-	wp core install --allow-root --url=${DOMAIN_NAME} --title="42 Inception" --admin_user=${DB_ROOT} --admin_password=${DB_PASS} --admin_email=${DB_EMAIL};
+	/usr/bin/php8 /usr/local/bin/wp core install --allow-root --url=${DOMAIN_NAME} --title="42 Inception" --admin_user=${DB_ROOT} --admin_password=${DB_PASS} --admin_email=${DB_EMAIL};
 
 	echo "wp user create..."
-	wp user create --allow-root ${DB_USER} ${DB_EMAIL} --role=contributor --user_pass=${DB_PASS};
+	/usr/bin/php8 /usr/local/bin/wp user create --allow-root ${DB_USER} ${DB_EMAIL} --role=contributor --user_pass=${DB_PASS};
 
 	echo "WordPress: Setup completed"
 else
