@@ -1,16 +1,16 @@
 #!/bin/sh
 
-# if [ ! -f ./wp-config.php ]
-# then 
+if [ ! -f ./wp-config.php ]
+then 
 	# echo "WordPress: Downloading..."
 	# wget http://wordpress.org/latest.tar.gz
 	# tar xfz latest.tar.gz
 	# rm -rf latest.tar.gz
 
-# wp core download --allow-root;
+	# wp core download --allow-root;
 	# cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
 
-echo "WordPress: Configuring..."
+	echo "WordPress: Configuring..."
 	# sed -i "s/database_name_here/$MARIADB_DATABASE/g" /var/www/html/wp-config.php
 	# sed -i "s/username_here/$MARIADB_USER/g" /var/www/html/wp-config.php
 	# sed -i "s/password_here/$MARIADB_PASSWORD/g" /var/www/html/wp-config.php
@@ -39,27 +39,16 @@ define( 'WP_REDIS_READ_TIMEOUT', 1 );
 define( 'WP_REDIS_DATABASE', 0 );
 require_once ABSPATH . 'wp-settings.php';
 EOF
-
-echo ""
-echo "ARGS:"
-echo "DOMAIN_NAME: ${DOMAIN_NAME}"
-echo "DB_ROOT: ${DB_ROOT}"
-echo "DB_PASS: ${DB_PASS}"
-echo "DB_EMAIL: ${DB_EMAIL}"
-echo "DB_USER: ${DB_USER}"
-echo "DB_NAME: ${DB_NAME}"
-
-echo ""
     
-echo "wp core install..."
-wp core install --allow-root --url=${DOMAIN_NAME} --title="42 Inception" --admin_user=${DB_USER} --admin_password=${DB_PASS} --admin_email=${DB_EMAIL};
+	echo "wp core install..."
+	wp core install --allow-root --url=${DOMAIN_NAME} --title="42 Inception" --admin_user=${DB_ROOT} --admin_password=${DB_PASS} --admin_email=${DB_EMAIL};
 
-echo "wp user create..."
-wp user create --allow-root ${DB_USER} ${DB_EMAIL} --role=contributor --user_pass=${DB_PASS};
+	echo "wp user create..."
+	wp user create --allow-root ${DB_USER} ${DB_EMAIL} --role=contributor --user_pass=${DB_PASS};
 
-echo "WordPress: Setup completed"
-# else
-# 	echo "WordPress: Is already downloaded and setup"
-# fi
+	echo "WordPress: Setup completed"
+else
+	echo "WordPress: Is already downloaded and setup"
+fi
 
 exec $@
