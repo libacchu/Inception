@@ -1,14 +1,37 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: libacchu <libacchu@student.42wolfsburg.de> +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/01/28 15:51:29 by libacchu          #+#    #+#              #
-#    Updated: 2023/01/28 15:51:30 by libacchu         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+# name = inception
+
+# all:
+# 	@printf "Launch configuration ${name}...\n"
+# 	@bash srcs/requirements/wordpress/tools/make_dir.sh
+# 	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d
+
+# build:
+# 	@printf "Building configuration ${name}...\n"
+# 	@bash srcs/requirements/wordpress/tools/make_dir.sh
+# 	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d --build
+
+# down:
+# 	@printf "Stopping configuration ${name}...\n"
+# 	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env down
+
+# re: down fclean
+# 	@printf "Rebuild configuration ${name}...\n"
+# 	@docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d --build
+
+# clean: down
+# 	@printf "Cleaning configuration ${name}...\n"
+# 	@docker system prune -a --force --volumes
+# 	@sudo rm -rf ~/data/wordpress/*
+# 	@sudo rm -rf ~/data/mariadb/*
+
+# fclean: clean
+# 	@printf "Total clean of all configurations docker\n"
+# 	@docker system prune --all --force --volumes
+# 	@docker network prune --force
+# 	@docker volume prune --force
+# 	@sudo rm -rf ~/data/wordpress/*
+# 	@sudo rm -rf ~/data/mariadb/*
+# .PHONY	: all build down re clean fclean
 
 CONTAINERS = (docker container ls -a -q)
 IMAGES = (docker image ls -q)
@@ -18,16 +41,19 @@ all: volumes up
 volumes:
 	@mkdir -p $(HOME)/data
 	@mkdir -p $(HOME)/data/wordpress
-	@mkdir -p $(HOME)/data/db
+	@mkdir -p $(HOME)/data/mariadb
 
 domain:
 	echo "127.0.0.1 libacchu.42.fr" >> /etc/hosts
 
-up:	volumes
-	docker compose -f ./src/docker-compose.yml up -d
+up:	
+	docker compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d
 
 down:
-	docker compose -f ./src/docker-compose.yml down
+	docker compose -f ./srcs/docker-compose.yml --env-file srcs/.env down
+
+build:
+	docker compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d --build
 
 conclean:
 	docker container rm -f $$(docker container ls -aq)
@@ -35,15 +61,15 @@ conclean:
 imgclean:
 	docker image rm $$(docker image ls -qa)
 
+ps:
+	docker ps
+
 prune:
 	docker system prune -af
-	rm -rf $(HOME)/data
+	sudo rm -rf $(HOME)/data
 
 fclean: down prune
 
 re: fclean all
 
-ps:
-	docker ps
-
-.PHONY: all domain up down fclean prune volumes re
+.PHONY: all domain up down fclean prune volumes re ps
