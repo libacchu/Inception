@@ -1,4 +1,4 @@
-FROM alpine:3.17
+FROM alpine:3.16
 ARG PHP_VERSION=8 \
     DB_NAME \
     DB_USER \
@@ -38,10 +38,6 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
   && mv wp-cli.phar /usr/local/bin/wp
 
 WORKDIR /var/www
-# RUN wget https://wordpress.org/latest.zip && \
-#     unzip latest.zip && \
-#     cp -rf wordpress/* . && \
-#     rm -rf wordpress latest.zip && rm -rf /var/www/wp-config.php
 
 COPY ./requirements/wordpress/conf/wp-config-create.sh .
 RUN chmod +x wp-config-create.sh
