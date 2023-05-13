@@ -9,18 +9,7 @@ then
 	rm -rf wordpress latest.zip
 	rm -rf /var/www/wp-config.php
 
-# /usr/bin/php8 /usr/local/bin/wp core download --allow-root
-
-# cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
-
 echo "WordPress: Configuring..."
-	# sed -i "s/database_name_here/$MARIADB_DATABASE/g" /var/www/html/wp-config.php
-	# sed -i "s/username_here/$MARIADB_USER/g" /var/www/html/wp-config.php
-	# sed -i "s/password_here/$MARIADB_PASSWORD/g" /var/www/html/wp-config.php
-	# sed -i "s/localhost/$MARIADB_HOST/g" /var/www/html/wp-config.php
-
-	# echo "Copying wp-config.php"
-	# cp /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
 
 cat << EOF > /var/www/wp-config.php
 <?php
