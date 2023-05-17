@@ -17,8 +17,8 @@ EXPOSE 3306
 COPY ./requirements/mariadb/conf/create_db.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/create_db.sh
 
-COPY ./requirements/mariadb/tools/mariadb.sql /usr/local/bin/
-RUN chmod +x /usr/local/bin/mariadb.sql
+# COPY ./requirements/mariadb/tools/mariadb.sql /usr/local/bin/
+# RUN chmod +x /usr/local/bin/mariadb.sql
 
 RUN chown -R mysql:mysql /var/lib
 
