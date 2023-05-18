@@ -46,6 +46,7 @@ services:
         DB_PASS: ${DB_PASS}
         DB_ROOT: ${DB_ROOT}
         DB_EMAIL: ${DB_EMAIL}
+        REDIS_PASS: ${REDIS_PASS}
         DOMAIN_NAME: ${DOMAIN_NAME}
     container_name: wordpress
     depends_on:
@@ -54,6 +55,7 @@ services:
     networks:
       - inception
     volumes:
+      - ./requirements/wordpress/conf/redis-test.php:/var/www/redis-test.php
       - wp-volume:/var/www/
     env_file: .env
 
@@ -61,7 +63,11 @@ services:
     build:
       context: .
       dockerfile: requirements/bonus/redis/Dockerfile
+      args:
+        REDIS_PASS: ${REDIS_PASS}
     container_name: redis
+    depends_on:
+      - wordpress
     ports:
       - "6379:6379"
     networks:
@@ -73,8 +79,6 @@ services:
       context: .
       dockerfile: requirements/bonus/website/Dockerfile
     container_name: website
-    # volumes:
-    #   - ./requirements/bonus/website/conf/:/etc/nginx/http.d/
     ports:
       - "80:80"
     restart: always

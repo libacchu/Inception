@@ -26,9 +26,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'ABSPATH', __DIR__ . '/' );}
 define( 'WP_REDIS_HOST', 'redis' );
 define( 'WP_REDIS_PORT', 6379 );
+define('WP_REDIS_PASSWORD', '${REDIS_PASS}');
 define( 'WP_REDIS_TIMEOUT', 1 );
 define( 'WP_REDIS_READ_TIMEOUT', 1 );
 define( 'WP_REDIS_DATABASE', 0 );
+define('WP_CACHE', true);
 require_once ABSPATH . 'wp-settings.php';
 EOF
     
@@ -45,4 +47,4 @@ else
 	echo "WordPress: Is already downloaded and setup"
 fi
 
-exec $@
+exec "$@"

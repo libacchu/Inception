@@ -8,7 +8,7 @@ RUN echo "server {" > /etc/nginx/http.d/default.conf && \
     echo "    try_files \$uri /index.html;" >> /etc/nginx/http.d/default.conf && \
     echo "}}" >> /etc/nginx/http.d/default.conf
 
-COPY ./requirements/bonus/website/tools/index.html /var/www/index.html
+COPY ./requirements/bonus/website/tools/ /var/www/
 
 EXPOSE 80
 

@@ -5,6 +5,7 @@ ARG PHP_VERSION=8 \
     DB_PASS \
     DB_ROOT \
     DB_EMAIL \
+    REDIS_PASS \
     DOMAIN_NAME
 
 RUN apk update && apk upgrade && apk add --no-cache \
@@ -22,6 +23,20 @@ RUN apk update && apk upgrade && apk add --no-cache \
     php${PHP_VERSION}-zip \
     php${PHP_VERSION}-redis \
     php${PHP_VERSION}-phar \
+    php${PHP_VERSION}-common \
+    php${PHP_VERSION}-session \
+    php${PHP_VERSION}-iconv \
+    php${PHP_VERSION}-gd \
+    php${PHP_VERSION}-imap \
+    php${PHP_VERSION}-cgi \
+    php${PHP_VERSION}-pdo \
+    php${PHP_VERSION}-soap \
+    php${PHP_VERSION}-posix \
+    php${PHP_VERSION}-gettext \
+    php${PHP_VERSION}-ldap \
+    php${PHP_VERSION}-ctype \
+    php${PHP_VERSION}-dom \
+    php${PHP_VERSION}-simplexml \
     curl \
     wget \
     unzip && \

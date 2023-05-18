@@ -22,6 +22,8 @@ RUN apk update && apk upgrade && apk add --no-cache \
     php${PHP_VERSION}-ctype \
     php${PHP_VERSION}-dom \
     php${PHP_VERSION}-simplexml \
+    php${PHP_VERSION}-redis \
+    tini \
     wget
 
 WORKDIR /var/www
@@ -31,4 +33,6 @@ RUN wget https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1
 
 EXPOSE 8080
 
-CMD	[ "php", "-S", "[::]:8080", "-t", "/var/www" ]
+ENTRYPOINT ["/sbin/tini", "--"]
+
+CMD	["php", "-S", "[::]:8080", "-t", "/var/www"]
